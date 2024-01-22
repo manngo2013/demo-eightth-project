@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Button, Card, Col, Container, Form, Row } from "react-bootstrap";
+import { toast } from "react-toastify";
 
 class Register extends Component {
   constructor(props) {
@@ -11,6 +12,40 @@ class Register extends Component {
       email: "",
     };
   }
+
+  isValidate = () => {
+    let isValid = true;
+
+    if (this.state.username === null || this.state.username === "") {
+      isValid = false;
+      toast.error("Please enter username");
+    }
+
+    if (this.state.password === null || this.state.password === "") {
+      isValid = false;
+      toast.error("Please enter password");
+    }
+
+    if (this.state.email === null || this.state.email === "") {
+      isValid = false;
+      toast.error("Please enter email");
+    } else if (
+      /^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[A-Za-z]+$/.test(this.state.email) === false
+    ) {
+      isValid = false;
+      toast.error("Please enter valid email");
+    }
+
+    return isValid;
+  };
+
+  handleRegister(e) {
+    e.preventDefault();
+    //alert("Test");
+    if (this.isValidate()) {
+    }
+  }
+
   render() {
     return (
       <Container style={{ textAlign: "center" }}>
@@ -61,7 +96,11 @@ class Register extends Component {
                     />
                   </Form.Group>
 
-                  <Button variant="primary" type="submit">
+                  <Button
+                    variant="primary"
+                    type="submit"
+                    onClick={(event) => this.handleRegister(event)}
+                  >
                     Submit
                   </Button>
                 </Form>
