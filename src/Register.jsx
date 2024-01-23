@@ -43,6 +43,24 @@ class Register extends Component {
     e.preventDefault();
     //alert("Test");
     if (this.isValidate()) {
+      let user = {
+        id: this.state.username,
+        username: this.state.username,
+        password: this.state.password,
+        email: this.state.email,
+      };
+
+      fetch("http://localhost:4000/users", {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify(user),
+      })
+        .then((res) => {
+          toast.success("Registered successful");
+        })
+        .catch((err) => {
+          toast.error("Failed: " + err.message);
+        });
     }
   }
 
