@@ -8,6 +8,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import Register from './Register';
 import { ToastContainer } from 'react-toastify';
+import Login from './Login';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -17,6 +18,7 @@ root.render(
       <Routes>
         <Route path='/' Component={App} />
         <Route path='/register' Component={Register} />
+        <Route path='/login' Component={Login} />
       </Routes>
     </BrowserRouter>
   </React.StrictMode>

@@ -1,9 +1,8 @@
 import React, { Component } from "react";
 import { Button, Card, Col, Container, Form, Row } from "react-bootstrap";
-import { Navigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
-class Register extends Component {
+class Login extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -11,7 +10,7 @@ class Register extends Component {
       username: "",
       password: "",
       email: "",
-      isRegisterSuccess: false,
+      isLoginSuccess: false,
     };
   }
 
@@ -28,50 +27,16 @@ class Register extends Component {
       toast.error("Please enter password");
     }
 
-    if (this.state.email === null || this.state.email === "") {
-      isValid = false;
-      toast.error("Please enter email");
-    } else if (
-      /^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[A-Za-z]+$/.test(this.state.email) === false
-    ) {
-      isValid = false;
-      toast.error("Please enter valid email");
-    }
-
     return isValid;
   };
 
-  handleRegister(e) {
+  handleLogin(e) {
     e.preventDefault();
-    //alert("Test");
     if (this.isValidate()) {
-      let user = {
-        id: this.state.username,
-        username: this.state.username,
-        password: this.state.password,
-        email: this.state.email,
-      };
-
-      fetch("http://localhost:4000/users", {
-        method: "POST",
-        headers: { "content-type": "application/json" },
-        body: JSON.stringify(user),
-      })
-        .then((res) => {
-          toast.success("Registered successful");
-          this.setState({ isRegisterSuccess: true });
-        })
-        .catch((err) => {
-          toast.error("Failed: " + err.message);
-        });
     }
   }
 
   render() {
-    if (this.state.isRegisterSuccess) {
-      return <Navigate to="/login" replace={true} />;
-    }
-
     return (
       <Container style={{ textAlign: "center" }}>
         <Row className="justify-content-md-center">
@@ -81,7 +46,7 @@ class Register extends Component {
                 as="h5"
                 style={{ paddingTop: "20px", paddingBottom: "20px" }}
               >
-                REGISTER NOW
+                LOGIN NOW
               </Card.Header>
               <Card.Body>
                 <Form>
@@ -109,24 +74,12 @@ class Register extends Component {
                     />
                   </Form.Group>
 
-                  <Form.Group className="mb-3" controlId="formBasicEmail">
-                    <Form.Label className="d-flex">Email</Form.Label>
-                    <Form.Control
-                      type="email"
-                      placeholder="Enter email"
-                      value={this.state.email}
-                      onChange={(event) => {
-                        this.setState({ email: event.target.value });
-                      }}
-                    />
-                  </Form.Group>
-
                   <Button
                     variant="primary"
                     type="submit"
-                    onClick={(event) => this.handleRegister(event)}
+                    onClick={(event) => this.handleLogin(event)}
                   >
-                    Submit
+                    Login
                   </Button>
                 </Form>
               </Card.Body>
@@ -138,4 +91,4 @@ class Register extends Component {
   }
 }
 
-export default Register;
+export default Login;
