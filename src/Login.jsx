@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Button, Card, Col, Container, Form, Row } from "react-bootstrap";
+import { Navigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
 class Login extends Component {
@@ -33,10 +34,33 @@ class Login extends Component {
   handleLogin(e) {
     e.preventDefault();
     if (this.isValidate()) {
+      fetch("http://localhost:4000/users/" + this.state.username)
+        .then((res) => {
+          return res.json();
+        })
+        .then((resp) => {
+          //console.log(resp);
+          if (Object.keys(resp).length === 0) {
+            toast.error("Please enter valid username");
+          } else {
+            if (resp.password === this.state.password) {
+              toast.success("Login success");
+              this.setState({ isLoginSuccess: true });
+            } else {
+              toast.error("Please enter valid password");
+            }
+          }
+        })
+        .catch((err) => {
+          toast.error("Login Failed due to:  " + err.message);
+        });
     }
   }
 
   render() {
+    if (this.state.isLoginSuccess) {
+      return <Navigate to="/" replace={true} />;
+    }
     return (
       <Container style={{ textAlign: "center" }}>
         <Row className="justify-content-md-center">
