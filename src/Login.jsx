@@ -46,6 +46,7 @@ class Login extends Component {
             if (resp.password === this.state.password) {
               toast.success("Login success");
               this.setState({ isLoginSuccess: true });
+              sessionStorage.setItem("username", this.state.username);
             } else {
               toast.error("Please enter valid password");
             }
