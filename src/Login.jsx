@@ -47,6 +47,8 @@ class Login extends Component {
               toast.success("Login success");
               this.setState({ isLoginSuccess: true });
               sessionStorage.setItem("username", this.state.username);
+              let user = { username: resp.username, role: resp.role };
+              sessionStorage.setItem("user", JSON.stringify(user));
             } else {
               toast.error("Please enter valid password");
             }
