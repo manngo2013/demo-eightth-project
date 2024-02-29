@@ -9,8 +9,13 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import Register from './Register';
 import { ToastContainer } from 'react-toastify';
 import Login from './Login';
+import Admin from './Admin';
+import AccessDenied from './AccessDenied';
+import ProtectedRoute from './ProtectedRoute';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
+let user = sessionStorage.getItem("user") != null ? JSON.parse(sessionStorage.getItem("user")) : '';
+
 root.render(
   <React.StrictMode>
     <ToastContainer theme='colored' />
@@ -19,6 +24,8 @@ root.render(
         <Route path='/' Component={App} />
         <Route path='/register' Component={Register} />
         <Route path='/login' Component={Login} />
+        <Route path='/403' Component={AccessDenied} />
+        <Route path='/admin' element={<ProtectedRoute user={user} redirectPath='/login' ><Admin /></ProtectedRoute>} />
       </Routes>
     </BrowserRouter>
   </React.StrictMode>
