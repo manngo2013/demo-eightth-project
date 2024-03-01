@@ -12,9 +12,13 @@ import Login from './Login';
 import Admin from './Admin';
 import AccessDenied from './AccessDenied';
 import ProtectedRoute from './ProtectedRoute';
+import ManagedProduct from './ManagedProduct';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 let user = sessionStorage.getItem("user") != null ? JSON.parse(sessionStorage.getItem("user")) : '';
+//console.log(`Check user role: ${user.role}`);
+let role = user.role;
+let accessAdminRoles = ['admin', 'employee']
 
 root.render(
   <React.StrictMode>
@@ -25,7 +29,10 @@ root.render(
         <Route path='/register' Component={Register} />
         <Route path='/login' Component={Login} />
         <Route path='/403' Component={AccessDenied} />
-        <Route path='/admin' element={<ProtectedRoute user={user} redirectPath='/login' ><Admin /></ProtectedRoute>} />
+        <Route path='/admin' element={<ProtectedRoute user={user} isAccess={!!user && accessAdminRoles.includes(role)} redirectPath='/login' ></ProtectedRoute>}>
+          <Route index Component={Admin} />
+          <Route path='product' Component={ManagedProduct} />
+        </Route>
       </Routes>
     </BrowserRouter>
   </React.StrictMode>

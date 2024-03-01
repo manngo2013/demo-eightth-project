@@ -1,10 +1,18 @@
-import { Navigate } from "react-router-dom";
+import { Navigate, Outlet } from "react-router-dom";
 
-const ProtectedRoute = ({ user, redirectPath = "/login", children }) => {
+const ProtectedRoute = ({
+  user,
+  isAccess,
+  redirectPath = "/login",
+  children,
+}) => {
   if (!user) {
     return <Navigate to={redirectPath} replace={true} />;
   }
-  return children;
+  if (!isAccess) {
+    return <Navigate to="/403" replace={true} />;
+  }
+  return children ? children : <Outlet />;
 };
 
 export default ProtectedRoute;
