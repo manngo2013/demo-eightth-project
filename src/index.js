@@ -13,6 +13,7 @@ import Admin from './Admin';
 import AccessDenied from './AccessDenied';
 import ProtectedRoute from './ProtectedRoute';
 import ManagedProduct from './ManagedProduct';
+import ManagedCustomer from './ManagedCustomer';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 let user = sessionStorage.getItem("user") != null ? JSON.parse(sessionStorage.getItem("user")) : '';
@@ -32,6 +33,7 @@ root.render(
         <Route path='/admin' element={<ProtectedRoute user={user} isAccess={!!user && accessAdminRoles.includes(role)} redirectPath='/login' ></ProtectedRoute>}>
           <Route index Component={Admin} />
           <Route path='product' Component={ManagedProduct} />
+          <Route path='customer' Component={ManagedCustomer} />
         </Route>
       </Routes>
     </BrowserRouter>
